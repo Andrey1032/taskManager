@@ -10,30 +10,25 @@ class Task:
     Класс задачи, содержащий основную информацию о задаче
 
     :param description: Описание задачи
+    :param id: Уникальный идентификатор задачи
+    :param status: Статус задачи
+    :param createdAt: Дата создания задачи
+    :param updatedAt: Дата последнего изменения задачи
     '''
 
     def __init__(self,  description: str, id: Union[str, None] = None, status: Union[Literal['todo', 'in-progress', 'done'], None] = None, createdAt: Union[str, None] = None, updatedAt: Union[str, None] = None):
         self.id = id if id else random_id()
         self.description = description
         self.status = status if status else 'todo'
-       # Установка момента создания задачи
         if isinstance(createdAt, str):
-            # Парсим введённую строку даты-времени
             dt_created = datetime.strptime(createdAt, format_string)
-            # Приводим вновь к строке нужного формата
             self.createdAt = dt_created
         else:
-            # По умолчанию используем текущую дату и приводим её к нужному формату
             self.createdAt = datetime.now()
-
-        # Установка момента последнего обновления
         if isinstance(updatedAt, str):
-            # Парсим введённую строку даты-времени
             dt_updated = datetime.strptime(updatedAt, format_string)
-            # Приводим вновь к строке нужного формата
             self.updatedAt = dt_updated
         else:
-            # Пока нет данных о последнем изменении
             self.updatedAt = None
 
     def set_status(self, status: Literal['todo', 'in-progress', 'done']) -> None:
